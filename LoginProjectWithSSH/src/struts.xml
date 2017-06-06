@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+
+	<constant name="struts.enable.DynamicMethodInvocation" value="false" />
+	<constant name="struts.devMode" value="false" />
+	<!-- 表示action的对象由spring来创建 -->
+	<constant name="struts.objectFactory" value="spring" />
+    <constant name="struts.objectFactory.spring.autoWire" value="name"/>
+	
+	<package name="LoginProjectWithSSH" namespace="/" extends="struts-default">
+
+		<interceptors>
+			<interceptor name="loginIntercepter"
+				class="com.infiniteyuan.utils.CheckLoginInterceptor">
+			</interceptor>
+			<!-- 拦截器栈 --> 
+			<interceptor-stack name="loginStack">
+				<interceptor-ref name="defaultStack" />
+				<interceptor-ref name="loginIntercepter" />
+			</interceptor-stack>
+		</interceptors>
+		
+		<default-interceptor-ref name="loginStack">
+		</default-interceptor-ref>
+
+		<action name="getUserInfo" class="com.infiniteyuan.actions.LoginAction"
+			method="getUserInfoList">
+			<result></result>	
+		</action>
+		<action name="addUser" class="com.infiniteyuan.actions.LoginAction"
+			method="addUser"></action>
+		<action name="deleteUser" class="com.infiniteyuan.actions.LoginAction"
+			method="deleteUser"></action>
+		<action name="updateUser" class="com.infiniteyuan.actions.LoginAction"
+			method="updateUser"></action>
+		<action name="login" class="com.infiniteyuan.actions.LoginAction"
+			method="login"></action>
+
+		<!-- <action name="LoginAction" class="com.infiniteyuan.actions.LoginAction">
+			<result name="success">/success.jsp</result>
+		</action> -->
+
+	</package>
+
+	<!-- Add packages here <include file="example.xml"/> -->
+
+</struts>
